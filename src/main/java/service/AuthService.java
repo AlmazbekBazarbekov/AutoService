@@ -1,6 +1,6 @@
-package com.autoservice.service;
+package service;
 
-import com.autoservice.model.*;
+import model.*;
 import java.util.List;
 
 public class AuthService {

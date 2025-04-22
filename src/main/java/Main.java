@@ -1,5 +1,5 @@
-import com.autoservice.model.*;
-import com.autoservice.service.AuthService;
+import model.*;
+import service.*;
 import java.util.Scanner;
 
 public class Main {

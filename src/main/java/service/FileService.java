@@ -1,4 +1,4 @@
-package com.autoservice.service;
+package service;
 
 import java.io.*;
 import java.util.ArrayList;

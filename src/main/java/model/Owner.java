@@ -1,6 +1,6 @@
-package com.autoservice.model;
+package model;
 
-import com.autoservice.service.FileService;
+import main.java.service.FileService;
 import java.util.List;
 
 public class Owner extends User {

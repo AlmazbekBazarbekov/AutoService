@@ -1,4 +1,4 @@
-package com.autoservice.model;
+package model;
 
 public abstract class User {
     private String username;
