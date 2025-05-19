@@ -1,22 +1,40 @@
 package service;
 
 import model.*;
-import java.util.List;
+import DB.DBconnection;
+import java.sql.*;
 
 public class AuthService {
-    public static User authenticate(String username, String password) {
-        List<String> users = FileService.readFile("data/users.csv");
+    public static User authenticate(String name, String password) {
+        String sql = "SELECT name, role FROM users WHERE name = ? AND password = ?";
 
-        for (String userLine : users) {
-            String[] userData = userLine.split(",");
-            if (userData[0].equals(username) && userData[1].equals(password)) {
-                return createUser(userData[0], userData[1], userData[2]);
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String dbUsername = rs.getString("name");
+                    String role = rs.getString("role");
+
+                    // Verify we got a valid user (password already verified by SQL query)
+                    if (dbUsername != null) {
+                        return createUser(dbUsername, password, role);
+                    }
+                }
             }
+        } catch (SQLException e) {
+            System.err.println("Database error during authentication: " + e.getMessage());
+            // Consider more sophisticated error handling in production
         }
         return null;
     }
 
     private static User createUser(String username, String password, String role) {
+        if (role == null) return null;
+
         switch (role.toUpperCase()) {
             case "OWNER":
                 return new Owner(username, password);

@@ -1,9 +1,15 @@
+import DB.UserDAO;
 import model.*;
 import service.*;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        UserDAO.getAllUsers();
+        UserDAO.getUser(1);
+        UserDAO.createUser("Amish", "Accountant", "Amish228", 130000);
+
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== АВТОСЕРВИС ===");
@@ -51,7 +57,7 @@ public class Main {
     private static boolean handleOwnerMenu(Owner owner, int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                owner.viewEmployees().forEach(System.out::println);
+                owner.viewEmployees();
                 return true;
             case 2:
                 System.out.print("Имя нового сотрудника: ");
@@ -60,12 +66,24 @@ public class Main {
                 String pwd = scanner.nextLine();
                 System.out.print("Роль: ");
                 String role = scanner.nextLine();
-                owner.hireEmployee(name, pwd, role);
+                System.out.print("Заработная плата: ");
+                int salary = Integer.parseInt(scanner.nextLine());
+                owner.hireEmployee(name, pwd, role, salary);
+                return true;
+            case 3:
+                owner.fireEmployee(scanner);
+                return true;
+            case 4:
+                System.out.println("Функционал установки цен будет реализован позже");
+                // owner.setPrices(scanner); // You would implement this method
                 return true;
             case 5:
+                Accountant.generateFinancialReport();
+                return true;
+            case 6:
                 return false;
             default:
-                System.out.println("Неизвестная команда");
+                System.out.println("Неизвестная команда. Введите число от 1 до 6");
                 return true;
         }
     }
@@ -76,12 +94,21 @@ public class Main {
                 manager.createAppointment(scanner);
                 return true;
             case 2:
-                manager.viewAppointments();
+                manager.viewAllAppointments();
+                return true;
+            case 3:
+                manager.updateAppointmentStatus(scanner);
+                return true;
+            case 4:
+                manager.updateAppointmentCost(scanner);
                 return true;
             case 5:
+                manager.viewCompletedAppointments();
+                return true;
+            case 6:
                 return false;
             default:
-                System.out.println("Неизвестная команда");
+                System.out.println("Неизвестная команда.");
                 return true;
         }
     }
@@ -89,29 +116,21 @@ public class Main {
     private static boolean handleMechanicMenu(Mechanic mechanic, int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                mechanic.viewMyTasks();
+                mechanic.viewCurrentTasks();
                 return true;
             case 2:
                 mechanic.updateRepairStatus(scanner);
                 return true;
             case 3:
-                System.out.print("Введите ID записи: ");
-                String id = scanner.nextLine();
-                System.out.print("Введите использованные запчасти: ");
-                String parts = scanner.nextLine();
-                // Здесь можно добавить логику учета запчастей
-                System.out.println("Запчасти учтены для записи " + id);
+                mechanic.recordUsedParts(scanner);
                 return true;
             case 4:
-                System.out.print("Введите ID завершенной работы: ");
-                String completeId = scanner.nextLine();
-                // Логика отметки о завершении
-                System.out.println("Работа " + completeId + " отмечена как завершенная");
+                mechanic.markAsCompleted(scanner);
                 return true;
             case 5:
                 return false;
             default:
-                System.out.println("Неизвестная команда");
+                System.out.println("Неизвестная команда. Введите число от 1 до 5");
                 return true;
         }
     }
