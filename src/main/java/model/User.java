@@ -1,12 +1,12 @@
 package model;
 
 public abstract class User {
-    private String username;
+    private String name;
     private String password;
     private String role;
 
     public User(String username, String passwordHash, String role) {
-        this.username = username;
+        this.name = username;
         this.password = passwordHash;
         this.role = role;
     }
@@ -18,8 +18,7 @@ public abstract class User {
     }
 
     // Геттеры
-    public String getUsername() { return username; }
-    public String getPasswordHash() { return password; }
+    public String getUsername() { return name; }
     public String getRole() { return role; }
 }
 
