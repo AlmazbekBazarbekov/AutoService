@@ -19,7 +19,7 @@ public class PartsSpecialist extends User {
         System.out.println("5. Выход");
     }
 
-    public void viewInventory() {
+    public static void viewInventory() {
         String sql = "SELECT part_name, quantity, unit_price FROM inventory ORDER BY part_name";
 
         try (Connection conn = DBconnection.getConnection();
@@ -128,7 +128,7 @@ public class PartsSpecialist extends User {
             System.err.println("Error placing order: " + e.getMessage());
         }
     }
-    public void setPartPrice(Scanner scanner) {
+    public static void setPartPrice(Scanner scanner) {
         viewInventory(); // Show current parts and prices
         System.out.print("\nEnter part name to update: ");
         String partName = scanner.nextLine();

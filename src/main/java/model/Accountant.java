@@ -83,4 +83,50 @@ public class Accountant extends User {
             System.err.println("Ошибка при сохранении данных о зарплате: " + e.getMessage());
         }
     }
+    public void recordIncome(Scanner scanner) {
+        System.out.print("Income amount: ");
+        double amount = Double.parseDouble(scanner.nextLine());
+        System.out.print("Income source: ");
+        String source = scanner.nextLine();
+
+        String sql = "INSERT INTO finances (description, type, amount, transaction_date) " +
+                "VALUES (?, 'Income', ?, CURRENT_DATE)";
+
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, source);
+            pstmt.setDouble(2, amount);
+            pstmt.executeUpdate();
+
+            System.out.printf("Recorded income: %.2f RUB from %s\n", amount, source);
+
+        } catch (SQLException e) {
+            System.err.println("Error recording income: " + e.getMessage());
+        }
+    }
+    public static void recordExpense(Scanner scanner) {
+        System.out.print("Expense amount: ");
+        double amount = Double.parseDouble(scanner.nextLine());
+        System.out.print("Expense source: ");
+        String description = scanner.nextLine();
+        System.out.print("Employee's name: ");
+        String employee = scanner.nextLine();
+        String sql = "INSERT INTO finances (description, type, amount, employee, transaction_date) " +
+                "VALUES (?, 'Expense', ?, ?, CURRENT_DATE)";
+
+        try (Connection conn = DBconnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, description);
+            pstmt.setDouble(2, amount);
+            pstmt.setString(3, employee);
+            pstmt.executeUpdate();
+
+            System.out.printf("Recorded expense: %.2f RUB for %s\n", amount, description);
+
+        } catch (SQLException e) {
+            System.err.println("Error recording expense: " + e.getMessage());
+        }
+    }
 }

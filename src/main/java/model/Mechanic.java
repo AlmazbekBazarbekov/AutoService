@@ -15,12 +15,12 @@ public class Mechanic extends User {
         System.out.println("1. Посмотреть текущие задания");
         System.out.println("2. Обновить статус заказа");
         System.out.println("3. Запись использованных запчастей");
-        System.out.println("4. Mark as completed");
-        System.out.println("5. Exit");
+        System.out.println("4. Пометить как завершенное");
+        System.out.println("5. Выход");
     }
 
     public void viewCurrentTasks() {
-        String sql = "SELECT id, client_name, car_model, service_description, status " +
+        String sql = "SELECT id, client_name, service_description, status " +
                 "FROM appointments WHERE status != 'Completed' ORDER BY appointment_date";
 
         try (Connection conn = DBconnection.getConnection();
@@ -36,7 +36,6 @@ public class Mechanic extends User {
                 System.out.printf("| %-3d | %-20s | %-14s | %-28s | %-14s |\n",
                         rs.getInt("id"),
                         rs.getString("client_name"),
-                        rs.getString("car_model"),
                         rs.getString("service_description"),
                         rs.getString("status"));
             }
@@ -133,7 +132,7 @@ public class Mechanic extends User {
         int id = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
-        String sql = "UPDATE appointments SET status = 'Completed', completion_time = CURRENT_TIMESTAMP " +
+        String sql = "UPDATE appointments SET status = 'Completed'" +
                 "WHERE id = ?";
 
         try (Connection conn = DBconnection.getConnection();
