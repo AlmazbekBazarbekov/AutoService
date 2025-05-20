@@ -27,7 +27,7 @@ public class AuthService {
             }
         } catch (SQLException e) {
             System.err.println("Database error during authentication: " + e.getMessage());
-            // Consider more sophisticated error handling in production
+
         }
         return null;
     }

@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        UserDAO.getAllUsers();
-        UserDAO.getUser(1);
         UserDAO.createUser("Amish", "Accountant", "Amish228", 130000);
 
 
@@ -55,6 +53,7 @@ public class Main {
     }
 
     private static boolean handleOwnerMenu(Owner owner, int choice, Scanner scanner) {
+        int viewEmployeesOption = 1;
         switch (choice) {
             case 1:
                 owner.viewEmployees();
@@ -74,8 +73,7 @@ public class Main {
                 owner.fireEmployee(scanner);
                 return true;
             case 4:
-                System.out.println("Функционал установки цен будет реализован позже");
-                // owner.setPrices(scanner); // You would implement this method
+                PartsSpecialist.setPartPrice(scanner);
                 return true;
             case 5:
                 Accountant.generateFinancialReport();
@@ -138,31 +136,21 @@ public class Main {
     private static boolean handlePartsSpecialistMenu(PartsSpecialist specialist, int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                specialist.viewInventory();
+                PartsSpecialist.viewInventory();
                 return true;
             case 2:
                 specialist.addParts(scanner);
                 return true;
             case 3:
-                System.out.print("Введите название запчасти для списания: ");
-                String partName = scanner.nextLine();
-                System.out.print("Введите количество: ");
-                int quantity = Integer.parseInt(scanner.nextLine());
-                // Логика списания запчастей
-                System.out.printf("Списано %d единиц %s\n", quantity, partName);
+                specialist.removeParts(scanner);
                 return true;
             case 4:
-                System.out.print("Введите запчасть для заказа: ");
-                String orderPart = scanner.nextLine();
-                System.out.print("Введите количество: ");
-                int orderQty = Integer.parseInt(scanner.nextLine());
-                // Логика заказа у поставщика
-                System.out.printf("Заказано %d единиц %s у поставщика\n", orderQty, orderPart);
+                specialist.orderFromSupplier(scanner);
                 return true;
             case 5:
                 return false;
             default:
-                System.out.println("Неизвестная команда");
+                System.out.println("Неизвестная команда. Введите число от 1 до 5");
                 return true;
         }
     }
@@ -170,31 +158,21 @@ public class Main {
     private static boolean handleAccountantMenu(Accountant accountant, int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                accountant.generateFinancialReport();
+                Accountant.generateFinancialReport();
                 return true;
             case 2:
                 accountant.calculateSalary(scanner);
                 return true;
             case 3:
-                System.out.print("Введите сумму расхода: ");
-                double expense = Double.parseDouble(scanner.nextLine());
-                System.out.print("Введите описание: ");
-                String description = scanner.nextLine();
-                // Логика учета расхода
-                System.out.printf("Учтен расход %.2f руб. на %s\n", expense, description);
+                Accountant.recordExpense(scanner);
                 return true;
             case 4:
-                System.out.print("Введите сумму дохода: ");
-                double income = Double.parseDouble(scanner.nextLine());
-                System.out.print("Введите источник: ");
-                String source = scanner.nextLine();
-                // Логика учета дохода
-                System.out.printf("Учтен доход %.2f руб. от %s\n", income, source);
+                accountant.recordIncome(scanner);
                 return true;
             case 5:
                 return false;
             default:
-                System.out.println("Неизвестная команда");
+                System.out.println("Unknown command. Please enter 1-5");
                 return true;
         }
     }
