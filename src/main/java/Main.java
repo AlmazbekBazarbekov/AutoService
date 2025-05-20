@@ -53,12 +53,17 @@ public class Main {
     }
 
     private static boolean handleOwnerMenu(Owner owner, int choice, Scanner scanner) {
-        int viewEmployeesOption = 1;
+        final int viewEmployeesOption = 1;
+        final int hireEmployeesOption = 2;
+        final int fireEmployeesOption = 3;
+        final int setPricesOption = 4;
+        final int generateFinancialReportOption = 5;
+        final int exitOption = 6;
         switch (choice) {
-            case 1:
+            case viewEmployeesOption:
                 owner.viewEmployees();
                 return true;
-            case 2:
+            case hireEmployeesOption:
                 System.out.print("Имя нового сотрудника: ");
                 String name = scanner.nextLine();
                 System.out.print("Пароль: ");
@@ -69,16 +74,16 @@ public class Main {
                 int salary = Integer.parseInt(scanner.nextLine());
                 owner.hireEmployee(name, pwd, role, salary);
                 return true;
-            case 3:
+            case fireEmployeesOption:
                 owner.fireEmployee(scanner);
                 return true;
-            case 4:
+            case setPricesOption:
                 PartsSpecialist.setPartPrice(scanner);
                 return true;
-            case 5:
+            case generateFinancialReportOption:
                 Accountant.generateFinancialReport();
                 return true;
-            case 6:
+            case exitOption:
                 return false;
             default:
                 System.out.println("Неизвестная команда. Введите число от 1 до 6");
@@ -87,23 +92,29 @@ public class Main {
     }
 
     private static boolean handleManagerMenu(Manager manager, int choice, Scanner scanner) {
+        final int createAppointmentOption = 1;
+        final int viewAllAppointmentsOption = 2;
+        final int updateAppointmentsOption = 3;
+        final int updateAppointmentsCostOption = 4;
+        final int viewCompletedOption = 5;
+        final int exitOption = 6;
         switch (choice) {
-            case 1:
+            case createAppointmentOption:
                 manager.createAppointment(scanner);
                 return true;
-            case 2:
+            case viewAllAppointmentsOption:
                 manager.viewAllAppointments();
                 return true;
-            case 3:
+            case updateAppointmentsOption:
                 manager.updateAppointmentStatus(scanner);
                 return true;
-            case 4:
+            case updateAppointmentsCostOption:
                 manager.updateAppointmentCost(scanner);
                 return true;
-            case 5:
+            case viewCompletedOption:
                 manager.viewCompletedAppointments();
                 return true;
-            case 6:
+            case exitOption:
                 return false;
             default:
                 System.out.println("Неизвестная команда.");
@@ -112,20 +123,25 @@ public class Main {
     }
 
     private static boolean handleMechanicMenu(Mechanic mechanic, int choice, Scanner scanner) {
+        final int viewCurrentTasksOption = 1;
+        final int updateRepairStatusOption = 2;
+        final int recordUsedPartsOption = 3;
+        final int markAsDoneOption = 4;
+        final int exitOption = 5;
         switch (choice) {
-            case 1:
+            case viewCurrentTasksOption:
                 mechanic.viewCurrentTasks();
                 return true;
-            case 2:
+            case updateRepairStatusOption:
                 mechanic.updateRepairStatus(scanner);
                 return true;
-            case 3:
+            case recordUsedPartsOption:
                 mechanic.recordUsedParts(scanner);
                 return true;
-            case 4:
+            case markAsDoneOption:
                 mechanic.markAsCompleted(scanner);
                 return true;
-            case 5:
+            case exitOption:
                 return false;
             default:
                 System.out.println("Неизвестная команда. Введите число от 1 до 5");
@@ -134,20 +150,25 @@ public class Main {
     }
 
     private static boolean handlePartsSpecialistMenu(PartsSpecialist specialist, int choice, Scanner scanner) {
+        final int viewInventoryOption = 1;
+        final int addPartsOption = 2;
+        final int removePartsOption = 3;
+        final int orderFromSupplierOption = 4;
+        final int exitOption = 5;
         switch (choice) {
-            case 1:
+            case viewInventoryOption:
                 PartsSpecialist.viewInventory();
                 return true;
-            case 2:
+            case addPartsOption:
                 specialist.addParts(scanner);
                 return true;
-            case 3:
+            case removePartsOption:
                 specialist.removeParts(scanner);
                 return true;
-            case 4:
+            case orderFromSupplierOption:
                 specialist.orderFromSupplier(scanner);
                 return true;
-            case 5:
+            case exitOption:
                 return false;
             default:
                 System.out.println("Неизвестная команда. Введите число от 1 до 5");
@@ -156,23 +177,28 @@ public class Main {
     }
 
     private static boolean handleAccountantMenu(Accountant accountant, int choice, Scanner scanner) {
+        final int generateFinancialReportOption = 1;
+        final int calculateSalaryOption = 2;
+        final int recordExpensesOption = 3;
+        final int recordIncomeOption = 4;
+        final int exitOption = 5;
         switch (choice) {
-            case 1:
+            case generateFinancialReportOption:
                 Accountant.generateFinancialReport();
                 return true;
-            case 2:
+            case calculateSalaryOption:
                 accountant.calculateSalary(scanner);
                 return true;
-            case 3:
+            case recordExpensesOption:
                 Accountant.recordExpense(scanner);
                 return true;
-            case 4:
+            case recordIncomeOption:
                 accountant.recordIncome(scanner);
                 return true;
-            case 5:
+            case exitOption:
                 return false;
             default:
-                System.out.println("Unknown command. Please enter 1-5");
+                System.out.println("Неизвестна команда. Введите число от 1-5.");
                 return true;
         }
     }
